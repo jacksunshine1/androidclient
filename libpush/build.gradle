@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+//apply from: 'fat-aar.gradle'
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", "BUILD_TIMESTAMP", getDate()
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+String getDate() {
+    Date date = new Date();
+    String dates = "\"\t" + date.toLocaleString() + "\"";
+    return dates;
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':libasmack')
+//    embedded project(':libasmack')
+}
